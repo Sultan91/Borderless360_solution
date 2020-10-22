@@ -3,11 +3,12 @@ import json
 
 
 class OrderHistory(object):
-
+    ''' Reads json data and compares dict values between two neighboring Order history results '''
     def __init__(self):
         self.focus_detail_keys = ['customs_id']
 
     def dict_diff(self, dict1:dict, dict2:dict):
+    	''' Determine mismatching values in two dicts '''
         keys = list(dict1.keys())
         diffs = {}
         if keys == list(dict2.keys()):
@@ -23,12 +24,14 @@ class OrderHistory(object):
         return diffs
 
     def get_changes(self, dict1:dict, dict2:dict):
+    	''' Returns total mismatching key-value paris that given two order history results have'''
         keys = list(dict1.keys())
         if keys == list(dict2.keys()):
             diffs = self.dict_diff(dict1, dict2)
             return diffs
 
     def display_details(self, key, res:dict)->str:
+    	'''General method that records changes in a string and outputs 'em to STDOUT'''
         if key in res.keys():
             fulfil_diffs = self.get_changes(res[key][0][0], res[key][1][0])
             out_str = ""

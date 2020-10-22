@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 let ejs = require('ejs');
 app.set('view engine', 'ejs');
+// Reading json file locally and sending changed order info to remplate 'index'
 app.get('/', function(req, res) {
     let data = require('../data/sample2.json');
     let results = OrderHistory(data['results'])
@@ -10,11 +11,14 @@ app.get('/', function(req, res) {
 });
 
 app.listen(8080);
-console.log('8080 is the magic port');
+console.log('Listening 8080 port');
 
 
-// ----------------------------------   OrderHistory
+//  OrderHistory handling functions that do similar logic, comparing mismatching values between two given order history entries
+
+
 function dict_diff(dict1, dict2){
+    // Find mismatching value pairs of two js objects with keys
     let diffs = new Map()
     if (dict1 === null || dict1 ===undefined) {
         return diffs
